@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+struct node{
+    int info;
+    struct node* link;
+};
+typedef struct node;
+void display_linked_list(node *head){
+    node *temp=head;
+    while(temp){
+        cout<<temp->info<<endl;
+        temp=temp->link;
+    }
+}
+void insertion(node **head,int value){
+    node *new_element=(node *)malloc(sizeof(node));
+    new_element->info=value;
+    new_element->link=NULL;
+    if(*head==NULL){
+        *head=new_element;
+        return;
+    }
+    struct node *temp=*head;
+    while (temp->link!=NULL){
+        temp=temp->link;
+    }
+    temp->link=new_element;
+}
+void reverse_linked_list(node **head){
+    node *current=*head;
+    node *prev=NULL;
+    node *next;
+    while(current!=NULL){
+        next=current->link;
+        current->link=prev;
+        prev=current;
+        current=next;
+    }
+    *head=prev;
+}
+int main() {
+    int n,value;
+    node *head=NULL;
+    cout<<"Enter number of elements to be added in the list: "<<endl;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cout<<"Enter value to be inserted"<<endl;
+        cin>>value;
+        insertion(&head,value);
+    }
+    display_linked_list(head);
+    reverse_linked_list(&head);
+    display_linked_list(head);
+    return 0;
+}
